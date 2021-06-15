@@ -6,17 +6,17 @@ import { remarkMdxImages } from "remark-mdx-images";
 
 const POSTS_PATH = path.join(process.cwd(), "_content/blog");
 
-export const getSourceOfFile = (filePath) => {
-  return fs.readFileSync(path.join(POSTS_PATH, filePath, "index.mdx"));
+export const getSourceOfFile = (fileName) => {
+  return fs.readFileSync(path.join(POSTS_PATH, fileName));
 };
 
 export const getAllPosts = () => {
   return fs
     .readdirSync(POSTS_PATH)
-    .map((filePath) => {
-      console.log(filePath);
-      const source = getSourceOfFile(filePath);
-      const slug = filePath.replace(/\.mdx?$/, "");
+    .filter((path) => /\.mdx?$/.test(path))
+    .map((fileName) => {
+      const source = getSourceOfFile(fileName);
+      const slug = fileName.replace(/\.mdx?$/, "");
       const { data } = matter(source);
 
       return {
@@ -33,7 +33,7 @@ export const getAllPosts = () => {
 };
 
 export const getSinglePost = async (slug) => {
-  const source = getSourceOfFile(slug);
+  const source = getSourceOfFile(slug + ".mdx");
   const imagesUrl = `/img/blog/${slug}/`;
 
   const { code, frontmatter } = await bundleMDX(source, {
