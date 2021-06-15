@@ -14,7 +14,6 @@ export const getAllPosts = () => {
   return fs
     .readdirSync(POSTS_PATH)
     .map((filePath) => {
-      console.log(filePath);
       const source = getSourceOfFile(filePath);
       const slug = filePath.replace(/\.mdx?$/, "");
       const { data } = matter(source);
