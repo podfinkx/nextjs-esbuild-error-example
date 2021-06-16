@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { getAllPosts } from "../../utils/mdx";
+import { getAllPosts } from "../../lib/data/posts";
 
 const GoBackButton = styled.a`
   width: 100px;
@@ -36,7 +36,7 @@ export default function BlogList({ posts }) {
         <ul>
           {posts.map((post, index) => (
             <li key={index}>
-              <Link href={`blog/${post.slug}`}>
+              <Link href={`/blog/${post.slug}`}>
                 <a className="link">{post.frontmatter.title}</a>
               </Link>
             </li>

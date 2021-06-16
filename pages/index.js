@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import Link from "next/link";
-import { getAllPosts } from "../utils/mdx";
+import { getAllPosts } from "../lib/data/posts";
 
 const BrowseAllButton = styled.a`
   width: 100px;
@@ -62,10 +62,11 @@ export default function Home({ posts }) {
 
 export const getStaticProps = async () => {
   const posts = getAllPosts();
+  console.log(posts);
 
   return {
     props: {
-      posts: posts.slice(0, 4),
+      posts: posts,
     },
   };
 };
